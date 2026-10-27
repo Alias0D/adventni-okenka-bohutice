@@ -1,0 +1,31 @@
+{
+  "rok": 2026,
+  "hodinaOdemceni": 17,
+  "sviti": "17:00–20:00",
+  "okenka": [
+    { "den": 1, "napoveda": "Hledej tam, kde se každé ráno peče a voní celá ulice." },
+    { "den": 2, "napoveda": "Okno vedle studny, která už dávno nedává vodu." },
+    { "den": 3, "napoveda": "Kde zvon odbíjí poledne, udělej sto kroků na sever." },
+    { "den": 4, "napoveda": "U plotu, za kterým v létě kvetou slunečnice." },
+    { "den": 5, "napoveda": "Kousek od zastávky, kde se čeká na ranní autobus." },
+    { "den": 6, "napoveda": "Mikuláš dnes nechodí sám – hledej okno s rohatým hostem." },
+    { "den": 7, "napoveda": "Tam, kde se o víkendu hraje fotbal, svítí i v zimě." },
+    { "den": 8, "napoveda": "Dnes hledej modrá vrata a za nimi teplé světlo." },
+    { "den": 9, "napoveda": "Nápověda bude doplněna." },
+    { "den": 10, "napoveda": "Nápověda bude doplněna." },
+    { "den": 11, "napoveda": "Nápověda bude doplněna." },
+    { "den": 12, "napoveda": "Nápověda bude doplněna." },
+    { "den": 13, "napoveda": "Nápověda bude doplněna." },
+    { "den": 14, "napoveda": "Nápověda bude doplněna." },
+    { "den": 15, "napoveda": "Nápověda bude doplněna." },
+    { "den": 16, "napoveda": "Nápověda bude doplněna." },
+    { "den": 17, "napoveda": "Nápověda bude doplněna." },
+    { "den": 18, "napoveda": "Nápověda bude doplněna." },
+    { "den": 19, "napoveda": "Nápověda bude doplněna." },
+    { "den": 20, "napoveda": "Nápověda bude doplněna." },
+    { "den": 21, "napoveda": "Nápověda bude doplněna." },
+    { "den": 22, "napoveda": "Nápověda bude doplněna." },
+    { "den": 23, "napoveda": "Nápověda bude doplněna." },
+    { "den": 24, "napoveda": "Nápověda bude doplněna." }
+  ]
+}

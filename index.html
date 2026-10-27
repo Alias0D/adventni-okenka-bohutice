@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Adventní okénka v Bohuticích</title>
+  <meta name="description" content="Od 1. do 24. prosince se každý večer v Bohuticích rozsvítí jedno nazdobené okno. Najdi ho podle nápovědy.">
+  <meta property="og:title" content="Adventní okénka v Bohuticích">
+  <meta property="og:description" content="Každý večer od 1. do 24. prosince jedno nazdobené okno. Najdeš ho?">
+  <meta property="og:image" content="assets/znak-bohutice.png">
+  <meta name="theme-color" content="#0b1729">
+  <link rel="icon" href="assets/znak-bohutice.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="hero">
+    <svg class="hvezdy" aria-hidden="true" width="100%" height="100%">
+      <circle cx="8%" cy="18%" r="2" opacity=".7"/>
+      <circle cx="17%" cy="42%" r="3" opacity=".5"/>
+      <circle cx="28%" cy="12%" r="2" opacity=".8"/>
+      <circle cx="39%" cy="55%" r="2.5" opacity=".4"/>
+      <circle cx="52%" cy="22%" r="2" opacity=".7"/>
+      <circle cx="63%" cy="48%" r="3" opacity=".5"/>
+      <circle cx="74%" cy="15%" r="2" opacity=".8"/>
+      <circle cx="86%" cy="38%" r="2.5" opacity=".6"/>
+      <circle cx="94%" cy="10%" r="2" opacity=".7"/>
+      <circle cx="46%" cy="70%" r="2" opacity=".4"/>
+      <circle cx="12%" cy="68%" r="2" opacity=".5"/>
+      <circle cx="80%" cy="66%" r="2" opacity=".5"/>
+    </svg>
+
+    <div class="lista obsah">
+      <span class="lista-polozka">
+        <img src="assets/znak-bohutice.png" alt="Znak obce Bohutice" width="40" height="48">
+        Obec Bohutice
+      </span>
+      <span class="lista-polozka">
+        SDH Bohutice
+        <img class="logo-sdh" src="assets/sdh-bohutice.jpg" alt="Logo SDH Bohutice" width="48" height="48">
+      </span>
+    </div>
+
+    <div class="hero-obsah obsah">
+      <img class="hero-znak" src="assets/znak-bohutice.png" alt="" width="76" height="92">
+      <p class="nadtitulek">1.–24. prosince · každý večer 17:00–20:00</p>
+      <h1>Adventní okénka<br>v Bohuticích</h1>
+      <p class="perex">Každý den se v Bohuticích rozsvítí jedno nazdobené okno. Tady najdeš nápovědu, kde ho hledat. Vezmi rodinu, termosku a vyraz na večerní procházku.</p>
+      <div class="tlacitka">
+        <button type="button" class="btn btn-zlute" id="otevrit-dnesni">Otevřít dnešní okénko</button>
+        <a href="#zapoj-se" class="btn btn-obrys">Chci nazdobit okno</a>
+      </div>
+    </div>
+
+    <svg class="silueta" aria-hidden="true" viewBox="0 0 1200 170" preserveAspectRatio="none" width="100%" height="170">
+      <path d="M0 170 V120 L40 95 L80 120 V170 Z M70 170 V105 L125 70 L180 105 V170 Z M175 170 V130 L215 108 L255 130 V170 Z M250 170 V95 L300 60 L350 95 V170 Z M345 170 V125 L385 100 L425 125 V170 Z M430 170 V60 L450 20 L470 60 V170 Z M420 170 V110 L480 110 V170 Z M475 170 V100 L530 66 L585 100 V170 Z M580 170 V128 L625 104 L670 128 V170 Z M665 170 V90 L725 52 L785 90 V170 Z M780 170 V120 L820 96 L860 120 V170 Z M855 170 V102 L905 70 L955 102 V170 Z M950 170 V130 L990 108 L1030 130 V170 Z M1025 170 V96 L1080 62 L1135 96 V170 Z M1130 170 V122 L1165 100 L1200 122 V170 Z" fill="#132542"/>
+      <g fill="#f5b942">
+        <rect x="112" y="112" width="14" height="18"/>
+        <rect x="288" y="104" width="12" height="16" opacity=".6"/>
+        <rect x="444" y="70" width="12" height="18"/>
+        <rect x="520" y="112" width="14" height="18" opacity=".7"/>
+        <rect x="712" y="102" width="14" height="18"/>
+        <rect x="896" y="112" width="12" height="16" opacity=".6"/>
+        <rect x="1070" y="106" width="14" height="18"/>
+      </g>
+      <rect x="0" y="160" width="1200" height="10" fill="#0f1d33"/>
+    </svg>
+  </header>
+
+  <main>
+    <section class="obsah kroky">
+      <div class="krok">
+        <span class="krok-cislo">1</span>
+        <h3>Otevři okénko</h3>
+        <p>Každý den v 17:00 se tu odemkne nové okénko s hádankou, kde hledat.</p>
+      </div>
+      <div class="krok">
+        <span class="krok-cislo">2</span>
+        <h3>Vyraz ven</h3>
+        <p>Projdi Bohutice a najdi rozsvícené, vánočně nazdobené okno.</p>
+      </div>
+      <div class="krok">
+        <span class="krok-cislo">3</span>
+        <h3>Odnes si odměnu</h3>
+        <p>Kdo okénko najde, dostane drobnost. Hlavně si ale užije adventní večer.</p>
+      </div>
+    </section>
+
+    <section id="okenka" class="obsah kalendar">
+      <div class="kalendar-hlavicka">
+        <div>
+          <h2>Kalendář okének</h2>
+          <p id="stav">Načítám okénka…</p>
+        </div>
+        <div class="legenda">
+          <span><i class="legenda-otevrene"></i>Otevřené</span>
+          <span><i class="legenda-ceka"></i>Čeká</span>
+        </div>
+      </div>
+      <div class="okna" id="okna"></div>
+    </section>
+  </main>
+
+  <footer id="zapoj-se" class="paticka">
+    <div class="obsah">
+      <div class="zapoj-se">
+        <div>
+          <h2>Chcete nazdobit okno i vy?</h2>
+          <p>Vyberte si den, ozdobte okno a jeden večer ho nechte svítit. Napište nám na [e-mail organizátorů].</p>
+        </div>
+        <a href="#" class="btn btn-zlute">Přihlásit své okno</a>
+      </div>
+      <div class="poradatele">
+        <div class="poradatele-loga">
+          <img class="logo-sdh" src="assets/sdh-bohutice.jpg" alt="Logo SDH Bohutice" width="56" height="56">
+          <img src="assets/znak-bohutice.png" alt="Znak obce Bohutice" width="46" height="56">
+          <span>Pořádá SDH Bohutice<br>ve spolupráci s obcí Bohutice</span>
+        </div>
+        <span class="copyright">© <span id="rok">2026</span> Adventní okénka Bohutice</span>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="modal" aria-labelledby="modal-napoveda">
+    <div class="m-karta">
+      <button type="button" class="zavrit" data-zavrit aria-label="Zavřít">
+        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+      <div class="m-okno">
+        <div class="svetlo">
+          <span class="svetlo-popis">Okénko</span>
+          <span class="svetlo-cislo" id="modal-cislo"></span>
+        </div>
+        <div class="kridlo kridlo-l"><span class="kridlo-pricka"></span><span class="kridlo-klika"></span></div>
+        <div class="kridlo kridlo-p"><span class="kridlo-pricka"></span></div>
+      </div>
+      <div class="m-text">
+        <p class="m-datum" id="modal-datum"></p>
+        <h2 id="modal-napoveda"></h2>
+        <button type="button" class="btn btn-zlute" data-zavrit>Jdu hledat!</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
