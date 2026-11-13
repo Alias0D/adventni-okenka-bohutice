@@ -132,10 +132,15 @@ function spustNapovedy(config, modal) {
 // ---------- Režim přihlašování ----------
 
 // Komunikace s Apps Scriptem. Bez `apiUrl` běží simulace v localStorage (jen pro vývoj).
-function vytvorApi(apiUrl) {
+function vytvorApi(apiUrl, predem) {
   if (apiUrl) {
     return {
       async stavy() {
+        if (predem) {
+          const vysledek = predem;
+          predem = null;
+          return vysledek;
+        }
         const odpoved = await fetch(apiUrl);
         return odpoved.json();
       },
@@ -211,6 +216,9 @@ function vykresliPrihlasovani(config, stavy, modal) {
     if (!stavy) {
       tlacitko.disabled = true;
       tlacitko.classList.add('nacita');
+      tlacitko.setAttribute('aria-label', `Okénko ${n} – načítám`);
+      tlacitko.style.setProperty('--i', n);
+      tlacitko.insertAdjacentHTML('beforeend', '<span class="okno-trpyt" aria-hidden="true"></span><span class="okno-stitek">Načítám</span>');
     } else if (stavy.uzamcene.includes(n)) {
       tlacitko.disabled = true;
       tlacitko.classList.add('uzamcene');
@@ -233,9 +241,28 @@ function vykresliPrihlasovani(config, stavy, modal) {
   }
 }
 
-function spustPrihlasovani(config, modal) {
-  const api = vytvorApi(config.apiUrl);
+// Poslední známý stav obsazenosti – při další návštěvě se okénka zobrazí hned
+const KLIC_STAVY = 'okenka-stavy';
+
+function nactiUlozeneStavy(apiUrl) {
+  try {
+    const ulozene = JSON.parse(localStorage.getItem(KLIC_STAVY));
+    return ulozene && ulozene.apiUrl === apiUrl ? ulozene : null;
+  } catch (_) {
+    return null;
+  }
+}
+
+function ulozStavy(apiUrl, stavy) {
+  try {
+    localStorage.setItem(KLIC_STAVY, JSON.stringify({ apiUrl, obsazene: stavy.obsazene, uzamcene: stavy.uzamcene }));
+  } catch (_) {}
+}
+
+function spustPrihlasovani(config, modal, predem) {
+  const api = vytvorApi(config.apiUrl, predem);
   const stavEl = document.getElementById('stav');
+  const spinner = '<span class="spinner" aria-hidden="true"></span>';
 
   const zobraz = (stavy) => {
     const volnych = 24 - stavy.obsazene.length - stavy.uzamcene.length;
@@ -243,20 +270,28 @@ function spustPrihlasovani(config, modal) {
       ? `Volných okének: ${volnych} z 24 · klikni na volné okénko a zamluv si ho`
       : 'Všechna okénka jsou obsazená – děkujeme!';
     vykresliPrihlasovani(config, stavy, modal);
+    if (config.apiUrl) ulozStavy(config.apiUrl, stavy);
   };
 
-  const nacti = async () => {
+  const ulozene = config.apiUrl ? nactiUlozeneStavy(config.apiUrl) : null;
+  if (ulozene) {
+    vykresliPrihlasovani(config, ulozene, modal);
+    stavEl.innerHTML = `${spinner}Ověřuji aktuální obsazenost…`;
+  } else {
+    vykresliPrihlasovani(config, null, modal);
+    stavEl.innerHTML = `${spinner}Načítám volná okénka…`;
+  }
+
+  (async () => {
     try {
       zobraz(await api.stavy());
     } catch (chyba) {
       console.error(chyba);
-      stavEl.textContent = 'Obsazenost se nepodařilo načíst. Zkuste stránku obnovit.';
+      stavEl.textContent = ulozene
+        ? 'Aktuální obsazenost se nepodařilo ověřit – zobrazený stav nemusí být úplně aktuální.'
+        : 'Obsazenost se nepodařilo načíst. Zkuste stránku obnovit.';
     }
-  };
-
-  vykresliPrihlasovani(config, null, modal);
-  stavEl.textContent = 'Načítám obsazenost…';
-  nacti();
+  })();
 
   modal.priOdeslani(async (data) => {
     let vysledek;
@@ -369,9 +404,9 @@ function pripravModal(config) {
 
 async function start() {
   let config;
+  let predemStavy = null;
   try {
-    const odpoved = await fetch('okenka.json', { cache: 'no-cache' });
-    config = await odpoved.json();
+    ({ config, stavy: predemStavy } = await window.predNacteni);
   } catch (chyba) {
     document.getElementById('stav').textContent = 'Okénka se nepodařilo načíst. Zkuste stránku obnovit.';
     console.error(chyba);
@@ -383,7 +418,7 @@ async function start() {
   for (const el of document.querySelectorAll('[data-pole]')) el.textContent = config[el.dataset.pole] ?? '';
 
   const modal = pripravModal(config);
-  if (rezim === 'prihlasovani') spustPrihlasovani(config, modal);
+  if (rezim === 'prihlasovani') spustPrihlasovani(config, modal, predemStavy);
   else spustNapovedy(config, modal);
 }
 

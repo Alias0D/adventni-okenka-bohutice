@@ -63,6 +63,7 @@ python3 -m http.server 8000
 ```
 
 - Bez `apiUrl` běží simulace rezervací v `localStorage` (červený pruh dole). Reset: v konzoli `localStorage.removeItem('okenka-simulace')`.
+- Web si pamatuje poslední stav obsazenosti (`localStorage` klíč `okenka-stavy`) a při další návštěvě ho ukáže hned, než dorazí čerstvá data z tabulky. Skeleton načítání uvidíte po `localStorage.removeItem('okenka-stavy')`.
 - `?rezim=napovedy` – vyzkoušet druhý režim bez úpravy configu
 - `?rezim=napovedy&den=8` – 8. prosince po 17:00; `&hodina=10` – dopoledne; `?den=25` – po adventu
 

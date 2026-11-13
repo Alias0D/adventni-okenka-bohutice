@@ -14,6 +14,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://script.google.com" crossorigin>
+  <link rel="preconnect" href="https://script.googleusercontent.com" crossorigin>
+  <script>
+    // Config a obsazenost okének se začnou stahovat hned, souběžně se zbytkem stránky (převezme je app.js)
+    window.predNacteni = fetch('okenka.json', { cache: 'no-cache' })
+      .then((odpoved) => odpoved.json())
+      .then((config) => {
+        const rezim = new URLSearchParams(location.search).get('rezim') || config.rezim;
+        const stavy = rezim === 'prihlasovani' && config.apiUrl
+          ? fetch(config.apiUrl).then((odpoved) => odpoved.json())
+          : null;
+        stavy?.catch(() => {}); // chybu zpracuje app.js
+        return { config, stavy };
+      });
+    window.predNacteni.catch(() => {});
+  </script>
 </head>
 <!-- data-rezim nastaví app.js podle okenka.json: „prihlasovani“ nebo „napovedy“ -->
 <body data-rezim="">
@@ -114,7 +130,7 @@
       <div class="kalendar-hlavicka">
         <div>
           <h2>Kalendář okének</h2>
-          <p id="stav">Načítám okénka…</p>
+          <p id="stav" aria-live="polite">Načítám okénka…</p>
         </div>
         <div class="legenda jen-prihlasovani">
           <span><i class="legenda-volne"></i>Volné</span>
@@ -183,10 +199,10 @@
             </label>
           </div>
           <label class="pole">
-            <span>Nápověda, kde okno hledat</span>
+            <span>Nápověda, kde okno hledat <span class="nepovinne">(nepovinné)</span></span>
             <textarea name="napoveda" rows="3" maxlength="1000" placeholder="Např. Hledej modrá vrata kousek od hasičárny."></textarea>
           </label>
-          <p class="formular-info">Nápověda není povinná. Pokud ji nemáte hned, pošlete ji nejpozději <b id="termin-napovedy"></b> na <span data-pole="kontaktEmail"></span>.</p>
+          <p class="formular-info">Nápověda není při registraci potřeba. Pokud si chcete okénko jen zamluvit a nápovědu ještě nevíte, nechte pole prázdné. Nápovědu můžete poslat později, nejpozději <b id="termin-napovedy"></b> na <span data-pole="kontaktEmail"></span>.</p>
           <p class="formular-info">Údaje použijeme jen k organizaci adventních okének a po akci je smažeme.</p>
           <p class="formular-chyba" id="formular-chyba" role="alert" hidden></p>
           <button type="submit" class="btn btn-zlute" id="formular-odeslat">Zamluvit okénko</button>

@@ -434,7 +434,35 @@ body:not([data-rezim="napovedy"]) .jen-napovedy { display: none; }
 .okno.obsazene .okno-stitek, .okno.uzamcene .okno-stitek { background: #1d3358; color: var(--text-tlumeny); }
 .okno-stitek svg { vertical-align: -1px; margin-right: 4px; }
 
-.okno.nacita { opacity: .5; }
+/* Načítání – skeleton s třpytem, aby okénka nepůsobila jako zamčená */
+@keyframes trpyt { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+@keyframes tocit { to { transform: rotate(360deg); } }
+.okno.nacita { overflow: hidden; border-color: #3a5480; cursor: progress; }
+.okno.nacita .okno-cislo { border-color: #3a5480; color: var(--text-slaby); }
+.okno.nacita .okno-stitek { background: #1d3358; color: var(--text-tlumeny); }
+.okno-trpyt {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(100deg, transparent 20%, rgba(255, 255, 255, .12) 50%, transparent 80%);
+  transform: translateX(-100%);
+  animation: trpyt 1.6s ease-in-out infinite;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+  vertical-align: -2px;
+  border: 2px solid rgba(245, 185, 66, .3);
+  border-top-color: var(--zluta);
+  border-radius: 50%;
+  animation: tocit .8s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .okno-trpyt { display: none; }
+}
 
 /* Modal – sekce a formulář */
 .m-sekce { display: none; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
@@ -510,3 +538,4 @@ body:not([data-rezim="napovedy"]) .jen-napovedy { display: none; }
   .m-karta.formularovy .svetlo-cislo { font-size: 44px; }
   .testovaci-pruh { white-space: normal; text-align: center; width: calc(100% - 32px); border-radius: 14px; }
 }
+.pole .nepovinne { font-weight: 400; color: var(--text-slaby); }
