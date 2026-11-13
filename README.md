@@ -7,7 +7,7 @@ Statický web pro adventní hru ve dvou režimech:
 
 Princip svícení: okno se ve svůj den v 17:00 poprvé rozsvítí a pak svítí **každý večer až do 24. prosince** – okna tedy postupně přibývají.
 
-Čisté HTML + CSS + JS, bez buildu. Hostováno na GitHub Pages (větev `main`, kořen repozitáře).
+Čisté HTML + CSS + JS, bez buildu. Hostováno na GitHub Pages (větev `main`, kořen repozitáře) na doméně **https://okenka-bohutice.site** (soubor `CNAME`, DNS u Wedosu: 4× A + 4× AAAA na GitHub Pages, `www` CNAME na `alias0d.github.io`).
 
 ## Nastavení – `okenka.json`
 
