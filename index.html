@@ -15,7 +15,8 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@400;500;600&display=swap">
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<!-- data-rezim nastaví app.js podle okenka.json: „prihlasovani“ nebo „napovedy“ -->
+<body data-rezim="">
 
   <header class="hero">
     <svg class="hvezdy" aria-hidden="true" width="100%" height="100%">
@@ -46,12 +47,14 @@
 
     <div class="hero-obsah obsah">
       <img class="hero-znak" src="assets/znak-bohutice.png" alt="" width="76" height="92">
-      <p class="nadtitulek">1.–24. prosince · každý večer 17:00–20:00</p>
+      <p class="nadtitulek jen-prihlasovani">Přihlašování otevřeno do <span data-pole="prihlasovaniDo"></span></p>
+      <p class="nadtitulek jen-napovedy">1.–24. prosince · každý večer 17:00–20:00</p>
       <h1>Adventní okénka<br>v Bohuticích</h1>
-      <p class="perex">Každý den se v Bohuticích rozsvítí jedno nazdobené okno. Tady najdeš nápovědu, kde ho hledat. Vezmi rodinu, termosku a vyraz na večerní procházku.</p>
+      <p class="perex jen-prihlasovani">Hledáme 24 sousedů, kteří v adventu nazdobí a jeden večer rozsvítí své okno. Vyberte si v kalendáři volný den a zamluvte si ho – stačí e-mail.</p>
+      <p class="perex jen-napovedy">Každý den se v Bohuticích rozsvítí jedno nazdobené okno. Tady najdeš nápovědu, kde ho hledat. Vezmi rodinu, termosku a vyraz na večerní procházku.</p>
       <div class="tlacitka">
-        <button type="button" class="btn btn-zlute" id="otevrit-dnesni">Otevřít dnešní okénko</button>
-        <a href="#zapoj-se" class="btn btn-obrys">Chci nazdobit okno</a>
+        <a href="#okenka" class="btn btn-zlute jen-prihlasovani">Vybrat volné okénko</a>
+        <button type="button" class="btn btn-zlute jen-napovedy" id="otevrit-dnesni">Otevřít dnešní okénko</button>
       </div>
     </div>
 
@@ -71,7 +74,25 @@
   </header>
 
   <main>
-    <section class="obsah kroky">
+    <section class="obsah kroky jen-prihlasovani">
+      <div class="krok">
+        <span class="krok-cislo">1</span>
+        <h3>Vyber si den</h3>
+        <p>V kalendáři klikni na volné okénko. Každý den svítí jen jedno okno.</p>
+      </div>
+      <div class="krok">
+        <span class="krok-cislo">2</span>
+        <h3>Zamluv si ho</h3>
+        <p>Stačí e-mail. Nápovědu, kde okno hledat, můžeš poslat i později.</p>
+      </div>
+      <div class="krok">
+        <span class="krok-cislo">3</span>
+        <h3>Nazdob a rozsviť</h3>
+        <p>Ve svůj den nech okno svítit od 17 do 20 hodin. Ostatní ho budou hledat podle nápovědy.</p>
+      </div>
+    </section>
+
+    <section class="obsah kroky jen-napovedy">
       <div class="krok">
         <span class="krok-cislo">1</span>
         <h3>Otevři okénko</h3>
@@ -95,7 +116,11 @@
           <h2>Kalendář okének</h2>
           <p id="stav">Načítám okénka…</p>
         </div>
-        <div class="legenda">
+        <div class="legenda jen-prihlasovani">
+          <span><i class="legenda-volne"></i>Volné</span>
+          <span><i class="legenda-ceka"></i>Obsazené</span>
+        </div>
+        <div class="legenda jen-napovedy">
           <span><i class="legenda-otevrene"></i>Otevřené</span>
           <span><i class="legenda-ceka"></i>Čeká</span>
         </div>
@@ -104,22 +129,15 @@
     </section>
   </main>
 
-  <footer id="zapoj-se" class="paticka">
+  <footer class="paticka">
     <div class="obsah">
-      <div class="zapoj-se">
-        <div>
-          <h2>Chcete nazdobit okno i vy?</h2>
-          <p>Vyberte si den, ozdobte okno a jeden večer ho nechte svítit. Napište nám na [e-mail organizátorů].</p>
-        </div>
-        <a href="#" class="btn btn-zlute">Přihlásit své okno</a>
-      </div>
       <div class="poradatele">
         <div class="poradatele-loga">
           <img class="logo-sdh" src="assets/sdh-bohutice.jpg" alt="Logo SDH Bohutice" width="56" height="56">
           <img src="assets/znak-bohutice.png" alt="Znak obce Bohutice" width="46" height="56">
           <span>Pořádá SDH Bohutice<br>ve spolupráci s obcí Bohutice</span>
         </div>
-        <span class="copyright">© <span id="rok">2026</span> Adventní okénka Bohutice</span>
+        <span class="copyright">© <span data-pole="rok"></span> Adventní okénka Bohutice · <span data-pole="kontaktEmail"></span></span>
       </div>
     </div>
   </footer>
@@ -137,10 +155,49 @@
         <div class="kridlo kridlo-l"><span class="kridlo-pricka"></span><span class="kridlo-klika"></span></div>
         <div class="kridlo kridlo-p"><span class="kridlo-pricka"></span></div>
       </div>
+
       <div class="m-text">
         <p class="m-datum" id="modal-datum"></p>
-        <h2 id="modal-napoveda"></h2>
-        <button type="button" class="btn btn-zlute" data-zavrit>Jdu hledat!</button>
+
+        <!-- Fáze 2: nápověda -->
+        <div class="m-sekce" data-sekce="napoveda">
+          <h2 id="modal-napoveda" data-nadpis></h2>
+          <button type="button" class="btn btn-zlute" data-zavrit>Jdu hledat!</button>
+        </div>
+
+        <!-- Fáze 1: rezervace -->
+        <form class="m-sekce formular" data-sekce="formular" id="formular">
+          <h2 id="nadpis-formular" data-nadpis>Tento den je volný!</h2>
+          <label class="pole">
+            <span>E-mail <abbr title="povinné">*</abbr></span>
+            <input type="email" name="email" required autocomplete="email" maxlength="200">
+          </label>
+          <div class="pole-radek">
+            <label class="pole">
+              <span>Telefon</span>
+              <input type="tel" name="telefon" autocomplete="tel" maxlength="30">
+            </label>
+            <label class="pole">
+              <span>Číslo popisné</span>
+              <input type="text" name="cp" inputmode="numeric" maxlength="20">
+            </label>
+          </div>
+          <label class="pole">
+            <span>Nápověda, kde okno hledat</span>
+            <textarea name="napoveda" rows="3" maxlength="1000" placeholder="Např. Hledej modrá vrata kousek od hasičárny."></textarea>
+          </label>
+          <p class="formular-info">Nápověda není povinná. Pokud ji nemáte hned, pošlete ji nejpozději <b id="termin-napovedy"></b> na <span data-pole="kontaktEmail"></span>.</p>
+          <p class="formular-info">Údaje použijeme jen k organizaci adventních okének a po akci je smažeme.</p>
+          <p class="formular-chyba" id="formular-chyba" role="alert" hidden></p>
+          <button type="submit" class="btn btn-zlute" id="formular-odeslat">Zamluvit okénko</button>
+        </form>
+
+        <!-- Fáze 1: potvrzení -->
+        <div class="m-sekce" data-sekce="hotovo">
+          <h2 id="nadpis-hotovo" data-nadpis>Hotovo, okénko je vaše!</h2>
+          <p class="m-popis" id="hotovo-text"></p>
+          <button type="button" class="btn btn-zlute" data-zavrit>Zavřít</button>
+        </div>
       </div>
     </div>
   </dialog>

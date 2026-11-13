@@ -281,26 +281,13 @@ h1 {
 .okno.dnes-ceka .okno-cislo { border-color: var(--zluta); color: var(--zluta); }
 
 /* Patička */
-.paticka { background: var(--noc-tmava); padding: 64px 24px 40px; }
-.paticka .obsah { display: flex; flex-direction: column; gap: 48px; }
-.zapoj-se {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 32px;
-  justify-content: space-between;
-  align-items: center;
-}
-.zapoj-se > div { display: flex; flex-direction: column; gap: 10px; max-width: 560px; }
-.zapoj-se h2 { margin: 0; font-family: var(--serif); font-weight: 400; font-size: 36px; color: #fff; }
-.zapoj-se p { margin: 0; font-size: 16px; line-height: 1.6; color: var(--text-tlumeny); }
+.paticka { background: var(--noc-tmava); padding: 40px 24px; }
 .poradatele {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   align-items: center;
   justify-content: space-between;
-  padding-top: 28px;
-  border-top: 1px solid #1f3457;
 }
 .poradatele-loga { display: flex; align-items: center; gap: 16px; }
 .poradatele-loga img { height: 56px; object-fit: contain; }
@@ -316,7 +303,7 @@ dialog {
   border: 0;
   background: transparent;
   color: var(--text);
-  overflow: visible;
+  overflow-y: auto;
 }
 dialog::backdrop {
   background: rgba(4, 10, 22, .82);
@@ -424,4 +411,102 @@ dialog.otevira .m-text { animation: text .5s ease 1.25s both; }
   .kalendar-hlavicka h2 { font-size: 36px; }
   .m-karta { padding: 44px 20px 28px; }
   .m-text h2 { font-size: 24px; }
+}
+
+/* Přepínání obsahu podle režimu (body[data-rezim]) */
+body:not([data-rezim="prihlasovani"]) .jen-prihlasovani,
+body:not([data-rezim="napovedy"]) .jen-napovedy { display: none; }
+
+/* Fáze 1 – stavy okének */
+.legenda-volne { border: 2px solid var(--zluta); background: transparent; }
+
+.okno.volne {
+  cursor: pointer;
+  border-color: var(--zluta);
+  box-shadow: 0 0 24px rgba(245, 185, 66, .18);
+}
+.okno.volne::before, .okno.volne::after { background: #3a5480; }
+.okno.volne .okno-cislo { border-color: var(--zluta); color: #fff; }
+.okno.volne .okno-stitek { background: var(--zluta); color: #241600; }
+.okno.volne:hover { transform: translateY(-4px); box-shadow: 0 0 36px rgba(245, 185, 66, .35); }
+
+.okno.obsazene, .okno.uzamcene { opacity: .6; }
+.okno.obsazene .okno-stitek, .okno.uzamcene .okno-stitek { background: #1d3358; color: var(--text-tlumeny); }
+.okno-stitek svg { vertical-align: -1px; margin-right: 4px; }
+
+.okno.nacita { opacity: .5; }
+
+/* Modal – sekce a formulář */
+.m-sekce { display: none; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
+.m-sekce.aktivni { display: flex; }
+.m-text { width: 100%; }
+.m-popis { margin: 0; font-size: 16px; line-height: 1.6; color: var(--text-tlumeny); }
+
+/* Ve formuláři je okno menší, aby se vše vešlo na obrazovku */
+.m-karta.formularovy { gap: 20px; }
+.m-karta.formularovy .m-okno { width: 130px; height: 172px; }
+.m-karta.formularovy .svetlo { border-radius: 65px 65px 10px 10px; border-width: 5px; }
+.m-karta.formularovy .svetlo-popis { font-size: 10px; }
+.m-karta.formularovy .svetlo-cislo { font-size: 56px; }
+.m-karta.formularovy .kridlo { border-width: 5px; }
+.m-karta.formularovy .kridlo-l { border-radius: 65px 0 0 10px; border-right-width: 2.5px; }
+.m-karta.formularovy .kridlo-p { border-radius: 0 65px 10px 0; border-left-width: 2.5px; }
+.m-karta.formularovy .kridlo-klika { right: 8px; height: 16px; width: 5px; }
+
+.formular { align-items: stretch; text-align: left; }
+.formular h2 { text-align: center; }
+.pole { display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 500; color: var(--text-tlumeny); }
+.pole abbr { color: var(--zluta); text-decoration: none; }
+.pole-radek { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.pole input, .pole textarea {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 14px;
+  border: 1.5px solid var(--ram);
+  border-radius: 12px;
+  background: var(--noc);
+  color: var(--text);
+  font: inherit;
+  font-size: 16px;
+}
+.pole textarea { resize: vertical; line-height: 1.5; }
+.pole input:focus, .pole textarea:focus { outline: none; border-color: var(--zluta); box-shadow: 0 0 0 3px rgba(245, 185, 66, .25); }
+.pole textarea::placeholder { color: #5f7597; }
+.formular-info { margin: 0; font-size: 13px; line-height: 1.55; color: var(--text-slaby); }
+.formular-info b { color: var(--text-tlumeny); font-weight: 600; }
+.formular-chyba {
+  margin: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(230, 90, 70, .15);
+  border: 1px solid rgba(230, 90, 70, .5);
+  color: #ffc9bf;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.formular .btn { margin-top: 4px; }
+.formular .btn:disabled { opacity: .6; cursor: wait; }
+
+/* Upozornění, že web běží bez napojené tabulky */
+.testovaci-pruh {
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  transform: translateX(-50%);
+  z-index: 10;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #e65a46;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .35);
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .pole-radek { grid-template-columns: 1fr; }
+  .m-karta.formularovy .m-okno { width: 100px; height: 132px; }
+  .m-karta.formularovy .svetlo-cislo { font-size: 44px; }
+  .testovaci-pruh { white-space: normal; text-align: center; width: calc(100% - 32px); border-radius: 14px; }
 }
