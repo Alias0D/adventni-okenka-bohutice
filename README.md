@@ -5,6 +5,8 @@ Statický web pro adventní hru ve dvou režimech:
 1. **Přihlašování** (`"rezim": "prihlasovani"`) – sousedé si v kalendáři zamlouvají dny, kdy nazdobí okno. Rezervace se ukládají do Google Tabulky přes Apps Script.
 2. **Nápovědy** (`"rezim": "napovedy"`) – od 1. do 24. prosince se každý den v 17:00 odemkne okénko s nápovědou, kde hledat nazdobené okno.
 
+Princip svícení: okno se ve svůj den v 17:00 poprvé rozsvítí a pak svítí **každý večer až do 24. prosince** – okna tedy postupně přibývají.
+
 Čisté HTML + CSS + JS, bez buildu. Hostováno na GitHub Pages (větev `main`, kořen repozitáře).
 
 ## Nastavení – `okenka.json`
@@ -16,7 +18,7 @@ Statický web pro adventní hru ve dvou režimech:
 | `prihlasovaniDo` | text v úvodu („Přihlašování otevřeno do …“) |
 | `kontaktEmail` | kam posílat nápovědy dodatečně |
 | `napovedaDniPredem` | kolik dní předem musí nápověda dorazit |
-| `rok`, `hodinaOdemceni`, `sviti` | rok konání, hodina odemčení (pražský čas), text „svítí 17:00–20:00“ |
+| `rok`, `hodinaOdemceni` | rok konání; hodina (pražský čas), kdy se okno poprvé rozsvítí a na webu odemkne nápověda |
 | `okenka[].napoveda` | nápovědy pro režim nápověd – sem je zkopírujte z tabulky |
 
 ## Google Tabulka a Apps Script (jednorázově)

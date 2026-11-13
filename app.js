@@ -327,7 +327,7 @@ function pripravModal(config) {
     odeslatEl.textContent = 'Zamluvit okénko';
 
     if (vysledek.ok) {
-      const zamluveno = `Okénko č. ${aktualniDen} (${denVTydnu(config, aktualniDen, 'long')} ${datumText(aktualniDen)}) je zamluvené na ${data.email}.`;
+      const zamluveno = `Okénko č. ${aktualniDen} (${denVTydnu(config, aktualniDen, 'long')} ${datumText(aktualniDen)}) je zamluvené na ${data.email}. Okno poprvé rozsviťte v ${config.hodinaOdemceni}:00 a pak ho nechte svítit každý večer až do 24. prosince.`;
       document.getElementById('hotovo-text').textContent = data.napoveda
         ? `${zamluveno} Nápovědu máme. Děkujeme a těšíme se na vaše okno!`
         : `${zamluveno} Nezapomeňte poslat nápovědu nejpozději ${terminNapovedy(config, aktualniDen)} na ${config.kontaktEmail}.`;
@@ -349,7 +349,7 @@ function pripravModal(config) {
     ukazNapovedu(okenko) {
       document.getElementById('modal-napoveda').textContent = `„${okenko.napoveda}“`;
       ukazSekci('napoveda');
-      otevri(okenko.den, `${datumText(okenko.den)} · svítí ${config.sviti}`);
+      otevri(okenko.den, `Svítí každý večer od ${datumText(okenko.den)}`);
     },
     ukazFormular(n) {
       aktualniDen = n;
@@ -357,7 +357,7 @@ function pripravModal(config) {
       odeslatEl.disabled = false;
       document.getElementById('termin-napovedy').textContent = terminNapovedy(config, n);
       ukazSekci('formular');
-      otevri(n, `${denVTydnu(config, n, 'long')} ${datumText(n)} · svítí ${config.sviti}`);
+      otevri(n, `${denVTydnu(config, n, 'long')} ${datumText(n)} · poprvé rozsvítit v ${config.hodinaOdemceni}:00`);
     },
     priOdeslani(fn) {
       odeslat = fn;
