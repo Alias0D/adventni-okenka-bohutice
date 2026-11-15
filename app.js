@@ -233,7 +233,7 @@ function vykresliPrihlasovani(config, stavy, modal) {
       tlacitko.classList.add('volne');
       tlacitko.setAttribute('aria-haspopup', 'dialog');
       tlacitko.setAttribute('aria-label', `Zamluvit okénko ${n}`);
-      tlacitko.insertAdjacentHTML('beforeend', '<span class="okno-stitek">Volné</span>');
+      tlacitko.insertAdjacentHTML('beforeend', '<span class="okno-stitek">Zamluvit</span>');
       tlacitko.addEventListener('click', () => modal.ukazFormular(n));
     }
 
@@ -265,10 +265,14 @@ function spustPrihlasovani(config, modal, predem) {
   const spinner = '<span class="spinner" aria-hidden="true"></span>';
 
   const zobraz = (stavy) => {
-    const volnych = 24 - stavy.obsazene.length - stavy.uzamcene.length;
+    const zamluveno = stavy.obsazene.length + stavy.uzamcene.length;
+    const volnych = 24 - zamluveno;
     stavEl.textContent = volnych > 0
-      ? `Volných okének: ${volnych} z 24 · klikni na volné okénko a zamluv si ho`
+      ? `${volnych} ${volnych === 1 ? 'volné okénko' : volnych < 5 ? 'volná okénka' : 'volných okének'} · vyberte si den, kdy okno poprvé rozsvítíte`
       : 'Všechna okénka jsou obsazená – děkujeme!';
+    document.getElementById('zamluveno').textContent = zamluveno;
+    document.getElementById('zaplnenost-vypln').style.width = `${(zamluveno / 24) * 100}%`;
+    document.getElementById('zaplnenost').hidden = false;
     vykresliPrihlasovani(config, stavy, modal);
     if (config.apiUrl) ulozStavy(config.apiUrl, stavy);
   };

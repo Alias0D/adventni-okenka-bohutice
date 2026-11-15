@@ -63,11 +63,10 @@
     </div>
 
     <div class="hero-obsah obsah">
-      <img class="hero-znak" src="assets/znak-bohutice.png" alt="" width="76" height="92">
       <p class="nadtitulek jen-prihlasovani">Přihlašování otevřeno do <span data-pole="prihlasovaniDo"></span></p>
       <p class="nadtitulek jen-napovedy">1.–24. prosince · každý den v 17:00 nové okno</p>
       <h1>Adventní okénka<br>v Bohuticích</h1>
-      <p class="perex jen-prihlasovani">Hledáme 24 sousedů, kteří v adventu nazdobí své okno. Ve svůj den ho poprvé rozsvítí a pak nechají svítit každý večer až do Štědrého dne. Vyberte si v kalendáři volný den a zamluvte si ho – stačí e-mail.</p>
+      <p class="perex jen-prihlasovani">Hledáme 24 sousedů, kteří v adventu nazdobí své okno. Každé okénko v kalendáři je jeden prosincový den – vyberte si některé z volných a zamluvte si ho. Stačí e-mail.</p>
       <p class="perex jen-napovedy">Každý den v 17:00 se v Bohuticích rozsvítí jedno nové nazdobené okno a svítí pak každý večer až do Vánoc. Tady najdeš nápovědu, kde ho hledat. Vezmi rodinu, termosku a vyraz na večerní procházku.</p>
       <div class="tlacitka">
         <a href="#okenka" class="btn btn-zlute jen-prihlasovani">Vybrat volné okénko</a>
@@ -94,18 +93,18 @@
     <section class="obsah kroky jen-prihlasovani">
       <div class="krok">
         <span class="krok-cislo">1</span>
-        <h3>Vyber si den</h3>
-        <p>V kalendáři klikni na volné okénko. Každý den přibude jedno nové okno.</p>
+        <h3>Vyberte si volné okénko</h3>
+        <p>Číslo okénka je den v prosinci. Zvolte některé z okének, které je ještě volné – to bude váš den.</p>
       </div>
       <div class="krok">
         <span class="krok-cislo">2</span>
-        <h3>Zamluv si ho</h3>
-        <p>Stačí e-mail. Nápovědu, kde okno hledat, můžeš poslat i později.</p>
+        <h3>Zamluvte si ho</h3>
+        <p>Stačí vyplnit e-mail. Okénko se tím zamkne, aby ho nezabral nikdo jiný. Nápovědu můžete vymyslet i později a poslat ji na e-mail <span data-pole="kontaktEmail"></span>. Pokud si s ní nebudete vědět rady, někdo z organizátorů vám jistě rád pomůže. Nápovědu pošlete ideálně nejpozději 4 dny před vámi vybraným dnem.</p>
       </div>
       <div class="krok">
         <span class="krok-cislo">3</span>
-        <h3>Nazdob a rozsviť</h3>
-        <p>Ve svůj den okno v 17 hodin poprvé rozsviť a pak ho nech svítit každý večer až do 24. prosince.</p>
+        <h3>Nazdobte a rozsviťte</h3>
+        <p>Ve svůj den okno v 17:00 poprvé rozsviťte a pak ho nechte svítit každý večer až do 24. prosince.</p>
       </div>
     </section>
 
@@ -133,9 +132,15 @@
           <h2>Kalendář okének</h2>
           <p id="stav" aria-live="polite">Načítám okénka…</p>
         </div>
-        <div class="legenda jen-prihlasovani">
-          <span><i class="legenda-volne"></i>Volné</span>
-          <span><i class="legenda-ceka"></i>Obsazené</span>
+        <div class="kalendar-pravy jen-prihlasovani">
+          <div class="zaplnenost" id="zaplnenost" hidden>
+            <span>Zamluveno <b id="zamluveno"></b> z 24</span>
+            <span class="zaplnenost-pruh" aria-hidden="true"><span id="zaplnenost-vypln"></span></span>
+          </div>
+          <div class="legenda">
+            <span><i class="legenda-volne"></i>Volné</span>
+            <span><i class="legenda-ceka"></i>Obsazené</span>
+          </div>
         </div>
         <div class="legenda jen-napovedy">
           <span><i class="legenda-otevrene"></i>Otevřené</span>
