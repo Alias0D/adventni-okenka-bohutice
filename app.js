@@ -203,7 +203,7 @@ function terminNapovedy(config, n) {
   });
 }
 
-function vykresliPrihlasovani(config, stavy, modal) {
+function vykresliPrihlasovani(config, stavy, modal, spusteno = true) {
   const kontejner = document.getElementById('okna');
   kontejner.replaceChildren();
   const zamek =
@@ -213,7 +213,12 @@ function vykresliPrihlasovani(config, stavy, modal) {
     const { bunka, tlacitko, datum } = vytvorOkno(n);
     datum.textContent = `${denVTydnu(config, n)} ${n}. 12.`;
 
-    if (!stavy) {
+    if (!spusteno) {
+      tlacitko.disabled = true;
+      tlacitko.classList.add('uzamcene');
+      tlacitko.setAttribute('aria-label', `Okénko ${n} – přihlašování zatím není spuštěné`);
+      tlacitko.insertAdjacentHTML('beforeend', `<span class="okno-stitek">${zamek}Brzy</span>`);
+    } else if (!stavy) {
       tlacitko.disabled = true;
       tlacitko.classList.add('nacita');
       tlacitko.setAttribute('aria-label', `Okénko ${n} – načítám`);
@@ -276,6 +281,13 @@ function spustPrihlasovani(config, modal, predem) {
     vykresliPrihlasovani(config, stavy, modal);
     if (config.apiUrl) ulozStavy(config.apiUrl, stavy);
   };
+
+  // Dokud není přihlašování spuštěné, jsou všechna okénka zavřená a tabulka se vůbec nevolá
+  if (!config.prihlasovaniSpusteno) {
+    vykresliPrihlasovani(config, null, modal, false);
+    stavEl.textContent = 'Přihlašování zatím není spuštěné – okénka brzy odemkneme. Zkuste to prosím později.';
+    return;
+  }
 
   const ulozene = config.apiUrl ? nactiUlozeneStavy(config.apiUrl) : null;
   if (ulozene) {
@@ -419,6 +431,7 @@ async function start() {
 
   const rezim = parametry.get('rezim') || config.rezim;
   document.body.dataset.rezim = rezim;
+  document.body.dataset.spusteno = config.prihlasovaniSpusteno ? 'ano' : 'ne';
   for (const el of document.querySelectorAll('[data-pole]')) el.textContent = config[el.dataset.pole] ?? '';
 
   const modal = pripravModal(config);

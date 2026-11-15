@@ -14,6 +14,7 @@ Princip svícení: okno se ve svůj den v 17:00 poprvé rozsvítí a pak svítí
 | Pole | Význam |
 |---|---|
 | `rezim` | `prihlasovani` nebo `napovedy` – přepnutí = změnit a pushnout |
+| `prihlasovaniSpusteno` | `false` = okénka zavřená se štítkem „Brzy“, bez statistik a bez volání tabulky; `true` = přihlašování běží |
 | `apiUrl` | URL nasazeného Apps Scriptu; prázdné = testovací simulace v prohlížeči |
 | `prihlasovaniDo` | text v úvodu („Přihlašování otevřeno do …“) |
 | `kontaktEmail` | kam posílat nápovědy dodatečně |

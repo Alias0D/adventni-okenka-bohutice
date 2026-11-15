@@ -1,5 +1,6 @@
 {
   "rezim": "prihlasovani",
+  "prihlasovaniSpusteno": false,
   "apiUrl": "https://script.google.com/macros/s/AKfycbzomAQmh1pc2acAAia27TZQD_KiycFyY2d4DfCn9jR6cZfKIsbP5Y63INwp5uig3OhT/exec",
   "prihlasovaniDo": "29. listopadu",
   "kontaktEmail": "drevo.a@seznam.cz",
