@@ -56,6 +56,10 @@ Upozornění na nové rezervace: v tabulce **Nástroje → Pravidla oznámení �
 2. Nastavte `"rezim": "napovedy"` a pushněte.
 3. Nápovědy, které dorazí později, doplňte stejně (úprava `okenka.json` + push).
 
+## Nasazení změn
+
+V `index.html` mají `style.css` a `app.js` parametr `?v=…`. **Při každé změně těchto souborů ho zvyšte** (např. na aktuální datum a čas `202611151230`), jinak mohou prohlížeče až 10 minut používat starou kopii z cache a kombinovat ji s novým HTML.
+
 ## Testování
 
 ```sh
