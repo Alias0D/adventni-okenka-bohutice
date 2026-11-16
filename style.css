@@ -545,6 +545,6 @@ body:not([data-rezim="napovedy"]) .jen-napovedy { display: none; }
   .kalendar-pravy { align-items: flex-start; }
 }
 
-/* Fáze 1 před spuštěním přihlašování (prihlasovaniSpusteno: false) */
+/* Fáze 1 před spuštěním přihlašování (před časem prihlasovaniOd) */
 body:not([data-spusteno="ano"]) .jen-spusteno,
 body:not([data-spusteno="ne"]) .jen-pred-spustenim { display: none; }

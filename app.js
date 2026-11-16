@@ -7,6 +7,7 @@
 // Pro testování lze v URL přepsat:
 //   ?rezim=napovedy           režim bez úpravy okenka.json
 //   ?den=8&hodina=18          datum v režimu nápověd
+//   ?spusteno=ano|ne          přihlašování spuštěné / ještě ne (místo času `prihlasovaniOd`)
 
 const parametry = new URLSearchParams(location.search);
 const datumText = (den) => `${den}. prosince`;
@@ -264,6 +265,17 @@ function ulozStavy(apiUrl, stavy) {
   } catch (_) {}
 }
 
+// „2026-11-17T10:00“ → „v úterý 17. listopadu v 10:00“
+function textSpusteni(text) {
+  const cas = window.casVPraze(text);
+  const format = (volby) => new Intl.DateTimeFormat('cs-CZ', { timeZone: 'Europe/Prague', ...volby }).format(cas);
+  const den = {
+    pondělí: 'v pondělí', úterý: 'v úterý', středa: 've středu', čtvrtek: 've čtvrtek',
+    pátek: 'v pátek', sobota: 'v sobotu', neděle: 'v neděli',
+  }[format({ weekday: 'long' })];
+  return `${den} ${format({ day: 'numeric', month: 'long' })} v ${format({ hour: 'numeric', minute: '2-digit', hourCycle: 'h23' })}`;
+}
+
 function spustPrihlasovani(config, modal, predem) {
   const api = vytvorApi(config.apiUrl, predem);
   const stavEl = document.getElementById('stav');
@@ -282,10 +294,23 @@ function spustPrihlasovani(config, modal, predem) {
     if (config.apiUrl) ulozStavy(config.apiUrl, stavy);
   };
 
-  // Dokud není přihlašování spuštěné, jsou všechna okénka zavřená a tabulka se vůbec nevolá
-  if (!config.prihlasovaniSpusteno) {
+  // Dokud není přihlašování spuštěné, jsou všechna okénka zavřená a tabulka se vůbec nevolá.
+  // Otevřená stránka se v čase spuštění odemkne sama (kontrola každých 15 s).
+  if (!window.jeSpusteno(config)) {
+    const termin = config.prihlasovaniOd ? textSpusteni(config.prihlasovaniOd) : null;
     vykresliPrihlasovani(config, null, modal, false);
-    stavEl.textContent = 'Přihlašování zatím není spuštěné – okénka brzy odemkneme. Zkuste to prosím později.';
+    stavEl.textContent = termin
+      ? `Přihlašování spustíme ${termin} – pak si budete moct vybrat okénko.`
+      : 'Přihlašování zatím není spuštěné – okénka brzy odemkneme. Zkuste to prosím později.';
+    if (termin) document.getElementById('termin-spusteni').textContent = termin;
+    if (config.prihlasovaniOd) {
+      const kontrola = setInterval(() => {
+        if (!window.jeSpusteno(config)) return;
+        clearInterval(kontrola);
+        document.body.dataset.spusteno = 'ano';
+        spustPrihlasovani(config, modal, null);
+      }, 15000);
+    }
     return;
   }
 
@@ -431,7 +456,7 @@ async function start() {
 
   const rezim = parametry.get('rezim') || config.rezim;
   document.body.dataset.rezim = rezim;
-  document.body.dataset.spusteno = config.prihlasovaniSpusteno ? 'ano' : 'ne';
+  document.body.dataset.spusteno = window.jeSpusteno(config) ? 'ano' : 'ne';
   for (const el of document.querySelectorAll('[data-pole]')) el.textContent = config[el.dataset.pole] ?? '';
 
   const modal = pripravModal(config);
